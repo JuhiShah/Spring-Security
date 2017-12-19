@@ -1,0 +1,30 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+    xmlns:beans="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+     http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+    http://www.springframework.org/schema/security 
+    http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+    
+ 
+ 	<http use-expressions="true" >
+ 		<intercept-url pattern="/login" access="permitAll" />
+ 		<intercept-url pattern="/errorPage" access="permitAll" />
+ 		<intercept-url pattern="/logout" access="permitAll" />
+ 		<intercept-url pattern="/**" access="hasRole('Admin')" />
+ 		<!-- <intercept-url pattern="/**" access="isAuthenticated()"/> -->
+ 		
+ 		<form-login login-page="/login" authentication-failure-url="/errorPage"   />
+ 	 	<logout logout-url="/logout" logout-success-url="/login" />
+ 	</http>
+    
+    <authentication-manager>
+    	<!-- here source of users are declared -->
+    	<authentication-provider >
+    			<user-service>
+    				<user name="Juhi" password="juhi" authorities="User" disabled="false" />
+    				<user name="Vikas" password="vikas" authorities="Admin,User"/>
+    			</user-service>
+    	</authentication-provider>
+    </authentication-manager>
+ </beans:beans>
